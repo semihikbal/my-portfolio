@@ -1,76 +1,476 @@
----
-import Layout from '../layouts/Layout.astro';
-import Markdown from '../components/Markdown.astro';
-
-// Biyografi metnin
-const bio = `
-Bilgisayar Mühendisliği son sınıf öğrencisi olarak, karmaşık mühendislik problemlerini yaratıcı oyun mekaniklerine dönüştürme konusunda tutkuluyum. Algoritmik düşünce yapısını ve mühendislik prensiplerini, oyun geliştirme süreçlerine entegre ederek hem optimize hem de keyifli deneyimler tasarlıyorum. Sevdiğim işi, teknik disiplinle yapıyorum. 💻
-
-Unity oyun motoru ve VR teknolojileri üzerine çalışıyorum. 
-
-Aşağıdaki butonlara tıklayarak projelerimi inceleyebilir veya oynayabilirsin! 👇
-`;
----
-
-<Layout title="Semih İkbal | Portfolio">
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semih İkbal | Game Developer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     
-    <section class="text-center py-12">
-        <h1 class="text-5xl font-bold mb-4">Semih İkbal</h1>
-        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-            Bilgisayar Mühendisliği Öğrencisi & Unity Developer. <br>
-            Oyun geliştirme tutkumu projelere dönüştürüyorum.
+    <style>
+        :root {
+            /* Senin Renk Paletin */
+            --bg-color: #1a1a2e;
+            --primary-orange: #f05454;
+            --accent-gold: #f5a623;
+            --text-color: #eaeaea;
+            --dark-blue: #16213e;
+            --card-bg: #0f3460;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .pixel-font, button {
+            font-family: 'Press Start 2P', cursive;
+            text-transform: uppercase;
+            line-height: 1.5;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(26, 26, 46, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 4px solid var(--primary-orange);
+        }
+
+        .logo {
+            color: var(--primary-orange);
+            font-size: 1.2rem;
+            text-shadow: 2px 2px #000;
+            text-decoration: none;
+        }
+
+        .nav-links { display: flex; align-items: center; }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.7rem; /* Fontu biraz küçülttüm sığması için */
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--accent-gold); }
+
+        #lang-btn {
+            background: transparent;
+            border: 2px solid var(--primary-orange);
+            color: white;
+            padding: 5px 10px;
+            margin-left: 20px;
+            cursor: pointer;
+            font-size: 0.6rem;
+            transition: all 0.3s;
+        }
+
+        #lang-btn:hover { background: var(--primary-orange); }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            /* Arka planı CSS gradient yaptım, istersen resim koyabilirsin */
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            padding-top: 80px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--primary-orange);
+            text-shadow: 4px 4px #000;
+            margin-bottom: 20px;
+            animation: glitch 2s infinite alternate;
+        }
+
+        .hero h3 { font-size: 1rem; color: var(--accent-gold); margin-bottom: 20px; }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        .btn {
+            background-color: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px #000;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.1s;
+        }
+
+        .btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: 0px 0px 0px #000;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent-gold);
+            color: var(--accent-gold);
+            margin-left: 10px;
+        }
+
+        /* --- About / Story Style --- */
+        .section { padding: 80px 20px; text-align: center; }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 50px auto;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border: 4px solid var(--dark-blue);
+            border-radius: 8px;
+            text-align: left;
+        }
+        
+        .info-card h3 { color: var(--accent-gold); margin-bottom: 15px; font-size: 1rem; }
+        .info-card p { line-height: 1.6; font-size: 0.95rem; }
+
+        /* --- Projects (Was Characters) --- */
+        .projects { background-color: var(--dark-blue); }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: #222;
+            padding: 20px;
+            border: 2px solid var(--accent-gold);
+            transition: transform 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-orange);
+        }
+
+        /* Proje Resimleri için Ayar */
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover; /* Resmi kutuya sığdırır */
+            border: 2px solid #000;
+            margin-bottom: 15px;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--primary-orange);
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.6rem;
+            font-family: 'Press Start 2P';
+            border: 2px solid #000;
+        }
+
+        .project-links {
+            margin-top: auto;
+            padding-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .small-btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.6rem;
+            text-decoration: none;
+            color: white;
+            font-family: 'Press Start 2P';
+            background: #333;
+            border: 2px solid #555;
+        }
+        
+        .small-btn.play { background: var(--primary-orange); border-color: var(--primary-orange); }
+
+        /* --- Skills (Was Features) --- */
+        .skills ul {
+            list-style: none;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* İki sütun yaptım */
+            gap: 20px;
+        }
+
+        .skills li {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        @media(max-width: 768px) {
+            .skills ul { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+
+        /* --- Contact --- */
+        .contact { background-color: #0f3460; }
+        .contact-form { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+        input, textarea {
+            padding: 15px;
+            background: #1a1a2e;
+            border: 2px solid var(--primary-orange);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+        }
+        footer {
+            background: black;
+            padding: 40px;
+            text-align: center;
+            font-size: 0.7rem;
+            border-top: 4px solid var(--primary-orange);
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 4px 4px #000; }
+            50% { text-shadow: -4px -4px #000; }
+            100% { text-shadow: 4px -4px #000; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo pixel-font">SEMIH IKBAL</a>
+        <div class="nav-links pixel-font">
+            <a href="#about" data-lang="nav_about">Hakkımda</a>
+            <a href="#projects" data-lang="nav_projects">Projeler</a>
+            <a href="#skills" data-lang="nav_skills">Yetenekler</a>
+            <a href="#contact" data-lang="nav_contact">İletişim</a>
+            <button id="lang-btn" onclick="toggleLanguage()">EN</button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1 data-lang="hero_title">SEMIH IKBAL</h1>
+        <h3 class="pixel-font">Computer Engineering Student & Game Developer</h3>
+        
+        <p data-lang="hero_desc">
+            Kod satırlarını yaşayan dünyalara dönüştürüyorum.<br>
+            Unity, Yapay Zeka ve Piksel Sanatı tutkusuyla projeler geliştiriyorum.
         </p>
         
-        <div class="mt-6">
-            <a href="https://github.com/semihikbal" target="_blank" class="inline-block bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg transition-colors border border-gray-600">
-                GitHub Profilim
-            </a>
+        <div>
+            <a href="#projects" class="btn pixel-font" data-lang="btn_projects">PROJELERİ GÖR</a>
+            <a href="https://github.com/semihikbal" target="_blank" class="btn btn-outline pixel-font">GITHUB</a>
+        </div>
+    </header>
+
+    <section id="about" class="section">
+        <h2 class="pixel-font" style="color: var(--accent-gold);" data-lang="section_about">HAKKIMDA</h2>
+        <div class="about-grid">
+            <div class="info-card">
+                <h3 class="pixel-font">🎓 <span data-lang="about_edu_title">Eğitim</span></h3>
+                <p data-lang="about_edu_desc">
+                    Bilgisayar Mühendisliği son sınıf öğrencisiyim. Mühendislik disiplinini yaratıcı oyun geliştirme süreçleriyle birleştiriyorum.
+                </p>
+            </div>
+            <div class="info-card">
+                <h3 class="pixel-font">⚔️ <span data-lang="about_vis_title">Vizyon</span></h3>
+                <p data-lang="about_vis_desc">
+                    Kurucu ortağı olduğum <strong>Sanzio Games</strong> ile bağımsız oyun dünyasında iz bırakacak, hikaye odaklı ve mekanik derinliği olan oyunlar üretmeyi hedefliyorum.
+                </p>
+            </div>
         </div>
     </section>
 
-    <section class="mt-10">
-        <h2 class="text-2xl font-bold mb-6 border-b border-gray-800 pb-2">Projelerim</h2>
+    <section id="projects" class="section projects">
+        <h2 class="pixel-font" style="color: var(--primary-orange); margin-bottom: 40px;" data-lang="section_projects">OYUNLAR & PROJELER</h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="project-grid">
             
-            <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors">
-                
-                <img src="/sensei.jpg" alt="Sensei Game" class="w-full h-48 object-cover bg-gray-800"/>
-                
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-xl font-bold text-white">Sensei</h3>
-                        <span class="text-xs font-bold bg-yellow-600 text-black px-2 py-1 rounded">Geliştirme Aşamasında</span>
-                    </div>
-                    
-                    <p class="text-gray-400 text-sm mb-4">
-                        Unity ile geliştirdiğim, samuray temalı 2D platform oyunu. Mekanik testleri ve bölüm tasarımları devam ediyor.
-                    </p>
-                    
-                    <a href="mailto:ikbalsemih6@gmail.com" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded transition">
-                        Tester Ol / İletişime Geç
-                    </a>
+            <div class="project-card">
+                <div class="status-badge">DEVELOPING</div>
+                <img src="./assets/WhatsApp Image 2025-12-28 at 16.01.41.jpeg" alt="Sensei Game"> 
+                <h3 class="pixel-font" style="margin-top:10px;">SENSEI</h3>
+                <p style="font-size:0.8rem; color:var(--accent-gold); margin-bottom:10px;">The Last Samurai</p>
+                <p style="font-size:0.9rem; line-height:1.5;" data-lang="proj_sensei_desc">
+                    İntikam peşindeki bir samurayın hikayesi. 7 Efsanevi Boss, pixel-art atmosfer ve zorlu mekanikler.
+                </p>
+                <div class="project-links">
+                    <a href="#" onclick="alert('Yakında!')" class="small-btn play">OYNA (DEMO)</a>
+                    <a href="#" class="small-btn">DETAYLAR</a>
                 </div>
             </div>
 
-            <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors">
-                <div class="w-full h-48 bg-gray-800 flex items-center justify-center text-gray-600">
-                    Görsel Eklenecek
+            <div class="project-card">
+                <div class="status-badge">MOBILE</div>
+                <img src="https://placehold.co/400x300/16213e/f5a623?text=PLANET+HIT" alt="Planet Hit">
+                <h3 class="pixel-font" style="margin-top:10px;">PLANET HIT</h3>
+                <p style="font-size:0.8rem; color:var(--accent-gold); margin-bottom:10px;">Hyper Casual</p>
+                <p style="font-size:0.9rem; line-height:1.5;" data-lang="proj_planet_desc">
+                    Uzay temalı bıçak fırlatma oyunu. Reflekslerinizi test eden sonsuz döngü.
+                </p>
+                <div class="project-links">
+                    <a href="#" class="small-btn">GOOGLE PLAY</a>
                 </div>
-                
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-white mb-2">Planet Hit</h3>
-                    <p class="text-gray-400 text-sm mb-4">
-                        Uzay temalı mobil oyun projesi. Yakında buraya eklenecek.
-                    </p>
+            </div>
+
+            <div class="project-card">
+                <div class="status-badge">R&D</div>
+                <img src="https://placehold.co/400x300/16213e/f05454?text=AI+SECURITY" alt="AI Project">
+                <h3 class="pixel-font" style="margin-top:10px;">AI SECURITY</h3>
+                <p style="font-size:0.8rem; color:var(--accent-gold); margin-bottom:10px;">Cybersecurity</p>
+                <p style="font-size:0.9rem; line-height:1.5;" data-lang="proj_ai_desc">
+                    Ağ günlüklerindeki kötü niyetli saldırıları tespit eden Derin Öğrenme modeli.
+                </p>
+                <div class="project-links">
+                    <a href="#" class="small-btn">GITHUB</a>
                 </div>
             </div>
 
         </div>
     </section>
 
-    <footer class="mt-24 py-8 text-center text-gray-600 text-sm border-t border-gray-800">
-        <p>&copy; 2026 Semih İkbal</p>
+    <section id="skills" class="section">
+        <h2 class="pixel-font" data-lang="section_skills">TEKNİK YETENEKLER</h2>
+        <ul>
+            <li><strong style="color:var(--primary-orange); margin-right:10px;">UNITY 2D/3D:</strong> İleri Seviye</li>
+            <li><strong style="color:var(--primary-orange); margin-right:10px;">C# / PYTHON:</strong> Yazılım Dilleri</li>
+            <li><strong style="color:var(--primary-orange); margin-right:10px;">VR / AR:</strong> Meta Quest Geliştirme</li>
+            <li><strong style="color:var(--primary-orange); margin-right:10px;">GIT / GITHUB:</strong> Versiyon Kontrol</li>
+            <li><strong style="color:var(--primary-orange); margin-right:10px;">AI / ML:</strong> Yapay Zeka Modelleri</li>
+            <li><strong style="color:var(--primary-orange); margin-right:10px;">PIXEL ART:</strong> Görsel Tasarım</li>
+        </ul>
+    </section>
+
+    <section id="contact" class="section contact">
+        <h2 class="pixel-font" data-lang="section_contact">İLETİŞİM</h2>
+        <p style="margin-bottom:30px;" data-lang="contact_desc">Projelerimde yer almak veya iş birliği yapmak için bana ulaşın.</p>
+        
+        <form class="contact-form" onsubmit="event.preventDefault(); sendEmail();">
+            <input type="text" placeholder="Adınız" required>
+            <input type="email" placeholder="E-Posta" required>
+            <textarea rows="5" placeholder="Mesajınız..." required></textarea>
+            <button type="submit" class="btn pixel-font" data-lang="btn_send">GÖNDER</button>
+        </form>
+
+        <p style="margin-top:30px;">
+            <a href="mailto:semihikbal@gmail.com" style="color:var(--primary-orange); text-decoration:none;">semihikbal@gmail.com</a>
+        </p>
+    </section>
+
+    <footer>
+        <p class="pixel-font">© 2026 SEMIH IKBAL.</p>
+        <p style="margin-top:10px; color:#666;">Powered by Sanzio Games Spirit</p>
     </footer>
 
-</Layout>
+    <script>
+        // --- DİL YÖNETİMİ (PORTFOLYO İÇİN UYARLANDI) ---
+        const translations = {
+            tr: {
+                nav_about: "Hakkımda",
+                nav_projects: "Projeler",
+                nav_skills: "Yetenekler",
+                nav_contact: "İletişim",
+                hero_title: "SEMIH IKBAL",
+                hero_desc: "Kod satırlarını yaşayan dünyalara dönüştürüyorum.<br>Unity, Yapay Zeka ve Piksel Sanatı tutkusuyla projeler geliştiriyorum.",
+                btn_projects: "PROJELERİ GÖR",
+                section_about: "HAKKIMDA",
+                about_edu_title: "Eğitim",
+                about_edu_desc: "Bilgisayar Mühendisliği son sınıf öğrencisiyim. Mühendislik disiplinini yaratıcı oyun geliştirme süreçleriyle birleştiriyorum.",
+                about_vis_title: "Vizyon",
+                about_vis_desc: "Kurucu ortağı olduğum <strong>Sanzio Games</strong> ile bağımsız oyun dünyasında iz bırakacak, hikaye odaklı oyunlar üretmeyi hedefliyorum.",
+                section_projects: "OYUNLAR & PROJELER",
+                proj_sensei_desc: "İntikam peşindeki bir samurayın hikayesi. 7 Efsanevi Boss, pixel-art atmosfer ve zorlu mekanikler.",
+                proj_planet_desc: "Uzay temalı bıçak fırlatma oyunu. Reflekslerinizi test eden sonsuz döngü.",
+                proj_ai_desc: "Ağ günlüklerindeki kötü niyetli saldırıları tespit eden Derin Öğrenme modeli.",
+                section_skills: "TEKNİK YETENEKLER",
+                section_contact: "İLETİŞİM",
+                contact_desc: "Projelerimde yer almak veya iş birliği yapmak için bana ulaşın.",
+                btn_send: "GÖNDER"
+            },
+            en: {
+                nav_about: "About",
+                nav_projects: "Projects",
+                nav_skills: "Skills",
+                nav_contact: "Contact",
+                hero_title: "SEMIH IKBAL",
+                hero_desc: "Turning lines of code into living worlds.<br>Developing projects with a passion for Unity, AI, and Pixel Art.",
+                btn_projects: "VIEW PROJECTS",
+                section_about: "ABOUT ME",
+                about_edu_title: "Education",
+                about_edu_desc: "Senior Computer Engineering student. Combining engineering discipline with creative game development processes.",
+                about_vis_title: "Vision",
+                about_vis_desc: "As the co-founder of <strong>Sanzio Games</strong>, I aim to create story-driven games that leave a mark on the indie scene.",
+                section_projects: "GAMES & PROJECTS",
+                proj_sensei_desc: "The story of a samurai seeking revenge. 7 Legendary Bosses, pixel-art atmosphere, and challenging mechanics.",
+                proj_planet_desc: "Space-themed knife throwing game. An endless loop testing your reflexes.",
+                proj_ai_desc: "Deep Learning model detecting malicious attacks in network logs.",
+                section_skills: "TECHNICAL SKILLS",
+                section_contact: "CONTACT",
+                contact_desc: "Contact me to collaborate or participate in my projects.",
+                btn_send: "SEND"
+            }
+        };
+
+        let currentLang = 'tr';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'tr' ? 'en' : 'tr';
+            document.getElementById('lang-btn').innerText = currentLang === 'tr' ? 'EN' : 'TR';
+
+            const elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+        }
+
+        function sendEmail() {
+            window.location.href = "mailto:semihikbal@gmail.com";
+        }
+    </script>
+</body>
+</html>
