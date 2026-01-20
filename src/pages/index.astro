@@ -2,18 +2,75 @@
 import Layout from '../layouts/Layout.astro';
 import Markdown from '../components/Markdown.astro';
 
-const explainer = `
-An Astro website can go way beyond static pages - on the right platform.
+// Biyografi metnin
+const bio = `
+Bilgisayar Mühendisliği son sınıf öğrencisi olarak, karmaşık mühendislik problemlerini yaratıcı oyun mekaniklerine dönüştürme konusunda tutkuluyum. Algoritmik düşünce yapısını ve mühendislik prensiplerini, oyun geliştirme süreçlerine entegre ederek hem optimize hem de keyifli deneyimler tasarlıyorum. Sevdiğim işi, teknik disiplinle yapıyorum. 💻
 
-Netlify supports not only [Streaming SSR](https://docs.astro.build/en/guides/server-side-rendering/#html-streaming) and fast [Edge Middleware](https://docs.astro.build/en/guides/middleware/), but also [on-demand revalidation](https://www.netlify.com/blog/cache-tags-and-purge-api-on-netlify/) and [stale-while-revalidate](https://www.netlify.com/blog/swr-and-fine-grained-cache-control/). 
-Any page or data can be rebuilt only when needed, without site visitors ever getting a performance hit.
+Unity oyun motoru ve VR teknolojileri üzerine çalışıyorum. 
+
+Aşağıdaki butonlara tıklayarak projelerimi inceleyebilir veya oynayabilirsin! 👇
 `;
 ---
 
-<Layout title="Welcome to Astro.">
-    <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
-    <Markdown content={explainer} class="mb-10 text-lg" />
-    <p>
-        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
-    </p>
+<Layout title="Semih İkbal | Portfolio">
+    
+    <section class="text-center py-12">
+        <h1 class="text-5xl font-bold mb-4">Semih İkbal</h1>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+            Bilgisayar Mühendisliği Öğrencisi & Unity Developer. <br>
+            Oyun geliştirme tutkumu projelere dönüştürüyorum.
+        </p>
+        
+        <div class="mt-6">
+            <a href="https://github.com/semihikbal" target="_blank" class="inline-block bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg transition-colors border border-gray-600">
+                GitHub Profilim
+            </a>
+        </div>
+    </section>
+
+    <section class="mt-10">
+        <h2 class="text-2xl font-bold mb-6 border-b border-gray-800 pb-2">Projelerim</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors">
+                
+                <img src="/sensei.jpg" alt="Sensei Game" class="w-full h-48 object-cover bg-gray-800"/>
+                
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-xl font-bold text-white">Sensei</h3>
+                        <span class="text-xs font-bold bg-yellow-600 text-black px-2 py-1 rounded">Geliştirme Aşamasında</span>
+                    </div>
+                    
+                    <p class="text-gray-400 text-sm mb-4">
+                        Unity ile geliştirdiğim, samuray temalı 2D platform oyunu. Mekanik testleri ve bölüm tasarımları devam ediyor.
+                    </p>
+                    
+                    <a href="mailto:semihikbal@gmail.com" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded transition">
+                        Tester Ol / İletişime Geç
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden hover:border-gray-600 transition-colors">
+                <div class="w-full h-48 bg-gray-800 flex items-center justify-center text-gray-600">
+                    Görsel Eklenecek
+                </div>
+                
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-white mb-2">Planet Hit</h3>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Uzay temalı mobil oyun projesi. Yakında buraya eklenecek.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="mt-24 py-8 text-center text-gray-600 text-sm border-t border-gray-800">
+        <p>&copy; 2026 Semih İkbal</p>
+    </footer>
+
 </Layout>
